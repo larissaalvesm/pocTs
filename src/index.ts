@@ -2,6 +2,7 @@ import express, { Request, Response, json } from "express";
 import "express-async-errors";
 import ordersRouter from "./routers/order-router";
 import { errorHandler } from "./middlewares/order-middleware";
+import clientRouter from "./routers/client-router";
 
 const app = express();
 app.use(json());
@@ -11,6 +12,7 @@ app.get("/health", (req: Request, res: Response) => {
 })
 
 app.use(ordersRouter);
+app.use(clientRouter);
 app.use(errorHandler);
 
 app.listen(5000, () => console.log(`Server is up and running or port 5000`));

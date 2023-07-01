@@ -1,13 +1,15 @@
 import { Request, Response, NextFunction } from 'express';
 import { CustomError } from '../protocols/order-protocol';
+import { ObjectSchema } from 'joi';
+import httpStatus from 'http-status';
 
-export function validateSchema(schema: any) {
+export function validateSchema(schema: ObjectSchema) {
     
 return (req: Request, res: Response, next: NextFunction) => {
 const validation = schema.validate(req.body, { abortEarly: false });
 if (validation.error) {
-    const errors = validation.error.details.map((detail: any) => detail.message);
-    return res.status(422).send(errors);
+    const errors = validation.error.details.map((detail) => detail.message);
+    return res.status(httpStatus.BAD_REQUEST).send(errors);
   }
   
   next();

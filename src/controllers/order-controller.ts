@@ -5,8 +5,8 @@ import ordersService from "../services/order-service";
 
 async function createOrder(req: Request, res: Response){
     const order = req.body as CreateOrder;
-    await ordersService.createOrder(order);
-    res.sendStatus(httpStatus.CREATED)
+    const orderId = await ordersService.createOrder(order);
+    res.status(httpStatus.CREATED).send({"orderId": orderId})
     
 }
 

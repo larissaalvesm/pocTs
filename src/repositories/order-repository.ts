@@ -1,9 +1,11 @@
 import { connection } from "../database/database-connection";
-import { Client, CreateOrder, Order } from "../protocols/order-protocol";
+import { Client } from "../protocols/client-protocol";
+import { CreateOrder, Order } from "../protocols/order-protocol";
 
 async function createOrder(order: CreateOrder){
 
-    return await connection.query(`INSERT INTO orders (client_id, product, status) VALUES ($1, $2, $3);`,[order.clientId, order.product, "Pedido recebido"]);
+    const result =  await connection.query(`INSERT INTO orders (client_id, product, status) VALUES ($1, $2, $3) RETURNING id;`,[order.clientId, order.product, "Pedido recebido"]);
+    return result.rows[0].id;
 }
 
 async function updateOrder(id: number, status: string){

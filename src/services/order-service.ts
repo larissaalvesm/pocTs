@@ -11,7 +11,8 @@ async function createOrder(order: CreateOrder){
         }
     }
 
-    return await ordersRepository.createOrder(order);
+    const orderId =  await ordersRepository.createOrder(order);
+    return orderId;
 }
 
 async function updateOrder(id: number, status: string){
